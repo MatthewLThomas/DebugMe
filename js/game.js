@@ -98,8 +98,6 @@ class Battle {
 	constructor(player, enemy) {
 		this.player = player;
 		this.enemy = enemy;
-		document.getElementById('attack').onclick = this.attack();
-		document.getElementById('heal').onclick = this.heal();
 	}
 
 	attack() {
@@ -116,7 +114,7 @@ class Battle {
 
 	heal() {
 		this.player.health += Math.round(Math.random() * 5);
-		console.log(`new health if ${this.player.health}`)
+		console.log(`new health of ${this.player.health}`)
 		this.enemyAttack();
 	}
 
