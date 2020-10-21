@@ -92,3 +92,44 @@ class Map{
 
 
 }//end of map class
+
+
+class Battle {
+	constructor(player, enemy) {
+		this.player = player;
+		this.enemy = enemy;
+		document.getElementById('attack').onclick = this.attack();
+		document.getElementById('heal').onclick = this.heal();
+	}
+
+	attack() {
+		const x = Math.round(Math.random());
+		if (x) {
+			this.enemy.health = this.enemy.health - this.player.weapon.damage;
+			console.log(`damage dealt ${this.player.weapon.damage}`)
+			console.log(`${this.enemy.name} health is now ${this.enemy.health}`)
+		} else {
+			console.log(`miss`);
+		}
+		this.enemyAttack();
+	}
+
+	heal() {
+		this.player.health += Math.round(Math.random() * 5);
+		console.log(`new health if ${this.player.health}`)
+		this.enemyAttack();
+	}
+
+	enemyAttack() {
+		if (this.enemy.health > 0) {
+			const x = Math.round(Math.random());
+			if (x) {
+				this.player.health = this.player.health - this.enemy.strength;
+				console.log(`enemy damage dealt ${this.enemy.strength}`)
+				console.log(`your health is now ${this.player.health}`)
+			} else {
+				console.log(`enemy miss`);
+			}
+		}
+	}
+}
