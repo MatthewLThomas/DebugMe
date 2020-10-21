@@ -75,6 +75,15 @@ class Map{
     }
     //don't need getters and setters
 
+    toString(){
+        let str = "";
+        for(const space of spaces){
+            str += Arrays.toString(space) + "\n";
+        }
+        return str;
+    }
+
+
     reduceScore(){
         this.score--;
     }
@@ -95,7 +104,14 @@ class Map{
                 break;
             default:
                 break;
-        }  
+        } 
+        this.checkWeapon();
+        this.reduceScore();
+        if(this.score ===0){
+            document.getElementById('Message').innerText = "You lose, your score is 0";
+            //exit
+            throw new Error("you lose");
+        } 
     }
 
     up(){
@@ -153,8 +169,8 @@ class Map{
         if(this.complete === this.rooms){
             //you win
             document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
-            
             //system exit
+            throw new Error("you won");
         }
     }
 
