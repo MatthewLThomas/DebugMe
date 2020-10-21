@@ -55,6 +55,7 @@ function Weapon(name) {
     this.damage = 1;
   }
 }
+<<<<<<< HEAD
 
 function Map(player){
 
@@ -103,6 +104,47 @@ function Map(player){
 
 
     this.reduceScore= function(){
+=======
+class Map{
+    constructor(player){
+        this.spaces=[[]];
+        this.player = player;
+        this.currentX = 5;
+        this.currentY = 5;
+        this.rooms = 0;
+        this.complete = 0;
+        this.score = 30;
+
+        //fillSpaces method
+        const x = Math.floor(Math.random()*5);
+        const y = Math.floor(Math.random()*5);
+        for (let i = 0; i < array.length; i++) {
+            for (let j = 0; j < array.length; j++) {
+                if(((i===0 || i===4) && j===2)|| (i===2 && (j===0||j===4))){
+                    spaces[i][j] = new Room();
+                    this.rooms++;
+                } else{
+                    spaces[i][j] = new Space(); 
+                }
+                
+            }//end of inner for loop
+        }//end of outer for loop
+        spaces[2][2].setCurrent = true;
+        this.currentX = 2;
+        this.currentY =2;
+        spaces[y][x].weapon= new Weapon('sword');
+        //implement checkWeapon here since it can't be called.
+        if(x === 2 && y ===2){
+            player.weapon = spaces[x][y].weapon;
+            spaces[y][x].weapon = null;
+            //console.log("you got the sword!!!");
+            document.getElementById('Message').innerText = "You got the sword!!!";
+        }
+    }
+    //don't need getters and setters
+
+    reduceScore(){
+>>>>>>> 8388eb2923a03375ee3f35e2d4f4184b0148b572
         this.score--;
     }
 
@@ -122,14 +164,7 @@ function Map(player){
                 break;
             default:
                 break;
-        } 
-        this.checkWeapon();
-        this.reduceScore();
-        if(this.score ===0){
-            document.getElementById('Message').innerText = "You lose, your score is 0";
-            //exit
-            throw new Error("you lose");
-        } 
+        }  
     }
 
     this.up= function(){
@@ -176,7 +211,7 @@ function Map(player){
     this.consequences= function(){
         this.checkWeapon();
         if(spaces[currentY][currentX] instanceof Room){
-            Battle.battle(player,spaces[currentY][currentX].enemy);
+            battle(player,spaces[currentY][currentX].enemy);
             spaces[currentY][currentX].enemy = null;
             this.complete++;
             this.win();
@@ -187,19 +222,32 @@ function Map(player){
         if(this.complete === this.rooms){
             //you win
             document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
+            
             //system exit
-            throw new Error("you won");
         }
     }
 
 
 }//end of map function
 
+function battle(player, enemy) {
+	let battle = new Battle(player, enemy);
+	while (battle.player.health > 0 && battle.enemy.health > 0) {
+		setTimeout(0);
+	}
+	console.log("done")
+}
 
 class Battle {
 	constructor(player, enemy) {
 		this.player = player;
 		this.enemy = enemy;
+		document.getElementById('attack').addEventListener('click', this.attack);
+		document.getElementById('heal').addEventListener('click', this.heal);
+	}
+
+	round() {
+
 	}
 
 	attack() {
@@ -227,9 +275,12 @@ class Battle {
 				this.player.health = this.player.health - this.enemy.strength;
 				console.log(`enemy damage dealt ${this.enemy.strength}`)
 				console.log(`your health is now ${this.player.health}`)
+				if (this.player.health <= 0) {}
 			} else {
 				console.log(`enemy miss`);
 			}
+		} else {
+			
 		}
 	}
 }
