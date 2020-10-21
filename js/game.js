@@ -21,3 +21,19 @@ function enemy(name = "goblin", strength = 3, health = 20) {
 	this.strength = strength;
 	this.health = health;
 }
+
+function Player(name, weapon) {
+  this.name = name;
+  this.health = 30;
+  this.weapon = new Weapon(weapon);
+}
+
+function Weapon(name) {
+  if (name == "sword") {
+    this.name = "sword";
+    this.damage = 5;
+  } else {
+    this.name = "fist";
+    this.damage = 1;
+  }
+}
