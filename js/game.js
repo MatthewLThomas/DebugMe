@@ -64,7 +64,7 @@ class Map{
         spaces[2][2].setCurrent = true;
         this.currentX = 2;
         this.currentY =2;
-        spaces[y][x].weapon=Weapon.setWeapon('sword');
+        spaces[y][x].weapon= new Weapon('sword');
         //implement checkWeapon here since it can't be called.
         if(x === 2 && y ===2){
             player.weapon = spaces[x][y].weapon;
@@ -74,15 +74,6 @@ class Map{
         }
     }
     //don't need getters and setters
-
-    toString(){
-        let str = "";
-        for(const space of spaces){
-            str += Arrays.toString(space) + "\n";
-        }
-        return str;
-    }
-
 
     reduceScore(){
         this.score--;
@@ -104,14 +95,7 @@ class Map{
                 break;
             default:
                 break;
-        } 
-        this.checkWeapon();
-        this.reduceScore();
-        if(this.score ===0){
-            document.getElementById('Message').innerText = "You lose, your score is 0";
-            //exit
-            throw new Error("you lose");
-        } 
+        }  
     }
 
     up(){
@@ -158,7 +142,7 @@ class Map{
     consequences(){
         this.checkWeapon();
         if(spaces[currentY][currentX] instanceof Room){
-            Battle.battle(player,spaces[currentY][currentX].enemy);
+            battle(player,spaces[currentY][currentX].enemy);
             spaces[currentY][currentX].enemy = null;
             this.complete++;
             this.win();
@@ -169,19 +153,32 @@ class Map{
         if(this.complete === this.rooms){
             //you win
             document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
+            
             //system exit
-            throw new Error("you won");
         }
     }
 
 
 }//end of map class
 
+function battle(player, enemy) {
+	let battle = new Battle(player, enemy);
+	while (battle.player.health > 0 && battle.enemy.health > 0) {
+		setTimeout(0);
+	}
+	console.log("done")
+}
 
 class Battle {
 	constructor(player, enemy) {
 		this.player = player;
 		this.enemy = enemy;
+		document.getElementById('attack').addEventListener('click', this.attack);
+		document.getElementById('heal').addEventListener('click', this.heal);
+	}
+
+	round() {
+
 	}
 
 	attack() {
@@ -209,9 +206,12 @@ class Battle {
 				this.player.health = this.player.health - this.enemy.strength;
 				console.log(`enemy damage dealt ${this.enemy.strength}`)
 				console.log(`your health is now ${this.player.health}`)
+				if (this.player.health <= 0) {}
 			} else {
 				console.log(`enemy miss`);
 			}
+		} else {
+			
 		}
 	}
 }
