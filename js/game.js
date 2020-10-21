@@ -1,4 +1,4 @@
-function space() {
+function Space() {
 	this.weapon = null;
 	this.visited = false;
 	this.current = false;
@@ -7,25 +7,25 @@ function space() {
 	}
 }
 
-function room() {
-	space.call(this);
-	this.enemy = new enemy();
+function Room() {
+	Space.call(this);
+	this.enemy = new Enemy();
 	this.safe = false;
 	this.setEnemy = function (newEnemy) {
 		this.enemy = newEnemy;
 	}
 }
 
-function enemy(name = "goblin", strength = 3, health = 20) {
+function Enemy(name = "goblin", strength = 3, health = 20) {
 	this.name = name;
 	this.strength = strength;
 	this.health = health;
 }
 
-function Player(name, weapon) {
+function Player(name) {
   this.name = name;
   this.health = 30;
-  this.weapon = new Weapon(weapon);
+  this.weapon = new Weapon();
 }
 
 function Weapon(name) {
