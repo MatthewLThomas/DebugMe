@@ -8,23 +8,36 @@
 </head>
 <body>
     <br>
+    <div>
+        <h2>Debug-Me</h2>
+    </div>
     <br>
     <div>
         <button id = "newGame">New Game</button>
     </div>
     <br>
-    <div  id="gameBoard" style="font-family: 'Courier New', Courier, monospace;"></div>
+    <div  id="gameBoard"></div>
     <script src= "../js/game.js"></script>
     <script src= "../js/renderer.js"></script>
+    <br>
+    <div id = "status"> 
+        <!--This is where Status messages come in-->
+        <p id= "Message"></p>
+    </div>
+    <div id="hud">
+        <!--This is where player health, and damage would go-->
+    </div>
     <br>
     <div>
         <button id="up">Move up</button>
     </div>
+    <br>
     <div>
         <button id ="left">Move Left</button>
         <button id = "down"> Move Down</button>
         <button id = "right">Move Right</button>
     </div>
+    <br>
     <div>
         <button id="attack">attack</button>
         <button id="heal">heal</button>

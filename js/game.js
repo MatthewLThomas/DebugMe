@@ -4,7 +4,16 @@ function Space() {
 	this.current = false;
 	this.isVisited = function () {
 		this.visited = true;
-	}
+    }
+    this.toString = function(){
+        if(this.current){
+            return "P";
+        } else if(this.visited){
+            return "O";
+        } else{
+            return "X";
+        }
+    }
 }
 
 function Room() {
@@ -13,7 +22,16 @@ function Room() {
 	this.safe = false;
 	this.setEnemy = function (newEnemy) {
 		this.enemy = newEnemy;
-	}
+    }
+    this.toString = function(){
+        if(this.prototype.visited){
+            return "S";
+        } else if(this.prototype.current){
+            return "P";
+        }else{
+            return "R";
+        }
+    }
 }
 
 function Enemy(name = "goblin", strength = 3, health = 20) {
@@ -79,7 +97,7 @@ class Map{
         this.score--;
     }
 
-    move(s){
+    this.move(s)= function(s){
         switch(s){
             case 'w':
                 this.up();
@@ -98,7 +116,7 @@ class Map{
         }  
     }
 
-    up(){
+    this.up= function(){
         if(this.currentY >0){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -106,7 +124,7 @@ class Map{
         }
     }
 
-    down(){
+    this.down= function(){
         if(this.currentY < 4){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -114,7 +132,7 @@ class Map{
         }
     }
 
-    left(){
+    this.left= function(){
         if(this.currentX < 4){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -122,7 +140,7 @@ class Map{
         }
     }
 
-    right(){
+    this.right=function (){
         if(this.currentY > 0){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -130,7 +148,7 @@ class Map{
         }
     }
 
-    checkWeapon(){
+    this.checkWeapon=function (){
         if(spaces[currentY][currentX].weapon != null){
             player.weapon = spaces[currentY][currentX].weapon;
             spaces[currentY][currentX].weapon = null;
@@ -139,7 +157,7 @@ class Map{
         }
     }
 
-    consequences(){
+    this.consequences= function(){
         this.checkWeapon();
         if(spaces[currentY][currentX] instanceof Room){
 			enemy = spaces[currentY][currentX].enemy;
@@ -150,7 +168,7 @@ class Map{
         }
     }
 
-    win(){
+    this.win= function(){
         if(this.complete === this.rooms){
             //you win
             document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
@@ -160,7 +178,7 @@ class Map{
     }
 
 
-}//end of map class
+}//end of map function
 
 let player = null;
 
