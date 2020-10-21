@@ -4,7 +4,16 @@ function Space() {
 	this.current = false;
 	this.isVisited = function () {
 		this.visited = true;
-	}
+    }
+    this.toString = function(){
+        if(this.current){
+            return "P";
+        } else if(this.visited){
+            return "O";
+        } else{
+            return "X";
+        }
+    }
 }
 
 function Room() {
@@ -13,7 +22,16 @@ function Room() {
 	this.safe = false;
 	this.setEnemy = function (newEnemy) {
 		this.enemy = newEnemy;
-	}
+    }
+    this.toString = function(){
+        if(this.prototype.visited){
+            return "S";
+        } else if(this.prototype.current){
+            return "P";
+        }else{
+            return "R";
+        }
+    }
 }
 
 function Enemy(name = "goblin", strength = 3, health = 20) {
@@ -37,45 +55,45 @@ function Weapon(name) {
     this.damage = 1;
   }
 }
-class Map{
-    constructor(player){
-        this.spaces=[[]];
-        this.player = player;
-        this.currentX = 5;
-        this.currentY = 5;
-        this.rooms = 0;
-        this.complete = 0;
-        this.score = 30;
 
-        //fillSpaces method
-        const x = Math.floor(Math.random()*5);
-        const y = Math.floor(Math.random()*5);
-        for (let i = 0; i < array.length; i++) {
-            for (let j = 0; j < array.length; j++) {
-                if(((i===0 || i===4) && j===2)|| (i===2 && (j===0||j===4))){
-                    spaces[i][j] = new Room();
-                    this.rooms++;
-                } else{
-                    spaces[i][j] = new Space(); 
-                }
-                
-            }//end of inner for loop
-        }//end of outer for loop
-        spaces[2][2].setCurrent = true;
-        this.currentX = 2;
-        this.currentY =2;
-        spaces[y][x].weapon=Weapon.setWeapon('sword');
-        //implement checkWeapon here since it can't be called.
-        if(x === 2 && y ===2){
-            player.weapon = spaces[x][y].weapon;
-            spaces[y][x].weapon = null;
-            //console.log("you got the sword!!!");
-            document.getElementById('Message').innerText = "You got the sword!!!";
-        }
+function Map(player){
+
+    this.spaces=[[]];
+    this.player = player;
+    this.currentX = 5;
+    this.currentY = 5;
+    this.rooms = 0;
+    this.complete = 0;
+    this.score = 30;
+
+    //fillSpaces method
+    const x = Math.floor(Math.random()*5);
+    const y = Math.floor(Math.random()*5);
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array.length; j++) {
+            if(((i===0 || i===4) && j===2)|| (i===2 && (j===0||j===4))){
+                spaces[i][j] = new Room();
+                this.rooms++;
+            } else{
+                spaces[i][j] = new Space(); 
+            }
+            
+        }//end of inner for loop
+    }//end of outer for loop
+    spaces[2][2].setCurrent = true;
+    this.currentX = 2;
+    this.currentY =2;
+    spaces[y][x].weapon=Weapon.setWeapon('sword');
+    //implement checkWeapon here since it can't be called.
+    if(x === 2 && y ===2){
+        player.weapon = spaces[x][y].weapon;
+        spaces[y][x].weapon = null;
+        //console.log("you got the sword!!!");
+        document.getElementById('Message').innerText = "You got the sword!!!";
     }
     //don't need getters and setters
 
-    toString(){
+    this.toString= function(){
         let str = "";
         for(const space of spaces){
             str += Arrays.toString(space) + "\n";
@@ -84,11 +102,11 @@ class Map{
     }
 
 
-    reduceScore(){
+    this.reduceScore= function(){
         this.score--;
     }
 
-    move(s){
+    this.move(s)= function(s){
         switch(s){
             case 'w':
                 this.up();
@@ -114,7 +132,7 @@ class Map{
         } 
     }
 
-    up(){
+    this.up= function(){
         if(this.currentY >0){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -122,7 +140,7 @@ class Map{
         }
     }
 
-    down(){
+    this.down= function(){
         if(this.currentY < 4){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -130,7 +148,7 @@ class Map{
         }
     }
 
-    left(){
+    this.left= function(){
         if(this.currentX < 4){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -138,7 +156,7 @@ class Map{
         }
     }
 
-    right(){
+    this.right=function (){
         if(this.currentY > 0){
             spaces[currentY][currentX].current = false;
             spaces[currentY][currentX].visited = true;
@@ -146,7 +164,7 @@ class Map{
         }
     }
 
-    checkWeapon(){
+    this.checkWeapon=function (){
         if(spaces[currentY][currentX].weapon != null){
             player.weapon = spaces[currentY][currentX].weapon;
             spaces[currentY][currentX].weapon = null;
@@ -155,7 +173,7 @@ class Map{
         }
     }
 
-    consequences(){
+    this.consequences= function(){
         this.checkWeapon();
         if(spaces[currentY][currentX] instanceof Room){
             Battle.battle(player,spaces[currentY][currentX].enemy);
@@ -165,7 +183,7 @@ class Map{
         }
     }
 
-    win(){
+    this.win= function(){
         if(this.complete === this.rooms){
             //you win
             document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
@@ -175,7 +193,7 @@ class Map{
     }
 
 
-}//end of map class
+}//end of map function
 
 
 class Battle {
