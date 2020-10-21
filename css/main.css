@@ -2,6 +2,7 @@ div{
     margin: 0;
     width: 656px;
     text-align: center;
+    font-family: 'Courier New', Courier, monospace;
 }
 .center{
     display: block;

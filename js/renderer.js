@@ -29,6 +29,7 @@ function renderPiece(input,i,j){
     switch(input[i][j]){
         case 'R':
             b.innerText = 'R '
+            b.color = 'red'
             break;
         case 'X':
             b.innerText = 'X '
