@@ -70,7 +70,7 @@ class Map{
             player.weapon = spaces[x][y].weapon;
             spaces[y][x].weapon = null;
             //console.log("you got the sword!!!");
-            document.getElementById('weapon').innerText = "You got the sword!!!";
+            document.getElementById('Message').innerText = "You got the sword!!!";
         }
     }
     //don't need getters and setters
@@ -135,7 +135,7 @@ class Map{
             player.weapon = spaces[currentY][currentX].weapon;
             spaces[currentY][currentX].weapon = null;
             //console.log("you got the sword!!!");
-            document.getElementById('weapon').innerText = "You got the sword!!!";
+            document.getElementById('Message').innerText = "You got the sword!!!";
         }
     }
 
@@ -152,21 +152,11 @@ class Map{
     win(){
         if(this.complete === this.rooms){
             //you win
-            this.printScore();
+            document.getElementById('Message').innerText = "You win!!! You got a score of ${this.score)!";
+            
             //system exit
         }
     }
-
-    checkWeapon(){
-        if(spaces[currentY][currentX].getWeapon()!=null)
-			player.setWeapon(spaces[currentY][currentX].getWeapon());
-			spaces[currentY][currentX].setWeapon(null);//fixed
-		
-		}
-    }
-
-
-    
 
 
 }//end of map class
