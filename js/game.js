@@ -142,7 +142,8 @@ class Map{
     consequences(){
         this.checkWeapon();
         if(spaces[currentY][currentX] instanceof Room){
-            battle(player,spaces[currentY][currentX].enemy);
+			enemy = spaces[currentY][currentX].enemy;
+            battle();
             spaces[currentY][currentX].enemy = null;
             this.complete++;
             this.win();
@@ -161,57 +162,54 @@ class Map{
 
 }//end of map class
 
-function battle(player, enemy) {
-	let battle = new Battle(player, enemy);
-	while (battle.player.health > 0 && battle.enemy.health > 0) {
+let player = null;
+
+function createPlayer(name) {
+	player = new Player(name);
+}
+
+let enemy = null;
+
+function battle() {
+	document.getElementById('attack').addEventListener('click', attack);
+	document.getElementById('heal').addEventListener('click', heal);
+	while (player.health > 0 && enemy.health > 0) {
 		setTimeout(0);
 	}
 	console.log("done")
 }
 
-class Battle {
-	constructor(player, enemy) {
-		this.player = player;
-		this.enemy = enemy;
-		document.getElementById('attack').addEventListener('click', this.attack);
-		document.getElementById('heal').addEventListener('click', this.heal);
+function attack() {
+	const x = Math.round(Math.random());
+	if (x) {
+		enemy.health = enemy.health - player.weapon.damage;
+		console.log(`damage dealt ${player.weapon.damage}`)
+		console.log(`${enemy.name} health is now ${enemy.health}`)
+	} else {
+		console.log(`miss`);
 	}
+	enemyAttack();
+}
 
-	round() {
+function heal() {
+	player.health += Math.round(Math.random() * 5);
+	console.log(`new health of ${player.health}`)
+	enemyAttack();
+}
 
-	}
-
-	attack() {
+function enemyAttack() {
+	if (enemy.health > 0) {
 		const x = Math.round(Math.random());
 		if (x) {
-			this.enemy.health = this.enemy.health - this.player.weapon.damage;
-			console.log(`damage dealt ${this.player.weapon.damage}`)
-			console.log(`${this.enemy.name} health is now ${this.enemy.health}`)
+			player.health = player.health - enemy.strength;
+			console.log(`enemy damage dealt ${enemy.strength}`)
+			console.log(`your health is now ${player.health}`)
+			if (player.health <= 0) {}
 		} else {
-			console.log(`miss`);
+			console.log(`enemy miss`);
+			battle();
 		}
-		this.enemyAttack();
-	}
-
-	heal() {
-		this.player.health += Math.round(Math.random() * 5);
-		console.log(`new health of ${this.player.health}`)
-		this.enemyAttack();
-	}
-
-	enemyAttack() {
-		if (this.enemy.health > 0) {
-			const x = Math.round(Math.random());
-			if (x) {
-				this.player.health = this.player.health - this.enemy.strength;
-				console.log(`enemy damage dealt ${this.enemy.strength}`)
-				console.log(`your health is now ${this.player.health}`)
-				if (this.player.health <= 0) {}
-			} else {
-				console.log(`enemy miss`);
-			}
-		} else {
-			
-		}
+	} else {
+		console.log('enemy dead');
 	}
 }
