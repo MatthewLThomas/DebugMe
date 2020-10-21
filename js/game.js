@@ -64,11 +64,11 @@ class Map{
         spaces[2][2].setCurrent = true;
         this.currentX = 2;
         this.currentY =2;
-        spaces[x][y].weapon=Weapon.setWeapon('sword');
+        spaces[y][x].weapon=Weapon.setWeapon('sword');
         //implement checkWeapon here since it can't be called.
         if(x === 2 && y ===2){
             player.weapon = spaces[x][y].weapon;
-            spaces[x][y].weapon = null;
+            spaces[y][x].weapon = null;
             //console.log("you got the sword!!!");
             document.getElementById('weapon').innerText = "You got the sword!!!";
         }
@@ -82,10 +82,88 @@ class Map{
     move(s){
         switch(s){
             case 'w':
-                
+                this.up();
+                break;
+            case 's':
+                this.down();
+                break;
+            case 'a':
+                this.left();
+                break;
+            case 'd':
+                this.right();
+                break;
+            default:
+                break;
+        }  
+    }
+
+    up(){
+        if(this.currentY >0){
+            spaces[currentY][currentX].current = false;
+            spaces[currentY][currentX].visited = true;
+            spaces[--currentY][currentX].current = true;
         }
     }
 
+    down(){
+        if(this.currentY < 4){
+            spaces[currentY][currentX].current = false;
+            spaces[currentY][currentX].visited = true;
+            spaces[++currentY][currentX].current = true;
+        }
+    }
+
+    left(){
+        if(this.currentX < 4){
+            spaces[currentY][currentX].current = false;
+            spaces[currentY][currentX].visited = true;
+            spaces[currentY][++currentX].current = true;
+        }
+    }
+
+    right(){
+        if(this.currentY > 0){
+            spaces[currentY][currentX].current = false;
+            spaces[currentY][currentX].visited = true;
+            spaces[currentY][--currentX].current = true;
+        }
+    }
+
+    checkWeapon(){
+        if(spaces[currentY][currentX].weapon != null){
+            player.weapon = spaces[currentY][currentX].weapon;
+            spaces[currentY][currentX].weapon = null;
+            //console.log("you got the sword!!!");
+            document.getElementById('weapon').innerText = "You got the sword!!!";
+        }
+    }
+
+    consequences(){
+        this.checkWeapon();
+        if(spaces[currentY][currentX] instanceof Room){
+            Battle.battle(player,spaces[currentY][currentX].enemy);
+            spaces[currentY][currentX].enemy = null;
+            this.complete++;
+            this.win();
+        }
+    }
+
+    win(){
+        if(this.complete === this.rooms){
+            //you win
+            this.printScore();
+            //system exit
+        }
+    }
+
+    checkWeapon(){
+        if(spaces[currentY][currentX].getWeapon()!=null)
+			player.setWeapon(spaces[currentY][currentX].getWeapon());
+			spaces[currentY][currentX].setWeapon(null);//fixed
+		
+		}
+    }
 
 
     
