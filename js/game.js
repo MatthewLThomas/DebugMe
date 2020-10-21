@@ -140,7 +140,7 @@ class Map{
             //console.log("you got the sword!!!");
             document.getElementById('Message').innerText = "You got the sword!!!";
         }
-    }
+    } 
     //don't need getters and setters
 
     reduceScore(){
